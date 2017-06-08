@@ -133,6 +133,10 @@ func (m *TestManager) testRun(d Deployment, index, attempt int, timeout time.Dur
 		if err != nil {
 			wrileLog(logFile, "Error [%s:%s] %v\nOutput: %s", step, resourceGroup, err, txt)
 			success = false
+			// check AUTOCLEAN flag: if set to 'n', don't remove deployment
+			if os.Getenv("AUTOCLEAN") == "n" {
+				env = append(env, "CLEANUP=n")
+			}
 			break
 		}
 		wrileLog(logFile, txt)
@@ -202,7 +206,7 @@ func isValidEnv() bool {
 }
 
 func (m *TestManager) runStep(name, step string, env []string, timeout time.Duration) (string, error) {
-	// work around az-cli parallelization issue https://github.com/Azure/azure-cli/issues/3255
+	// prevent ARM throttling
 	m.lock.Lock()
 	go func() {
 		time.Sleep(2 * time.Second)
