@@ -29,8 +29,8 @@
       }
     },
     "servicePrincipalProfile": {
-      "servicePrincipalClientID": "",
-      "servicePrincipalClientSecret": ""
+      "servicePrincipalClientID": "f38b2430-bc46-42cd-b254-9e1855a98f56",
+      "servicePrincipalClientSecret": "fe7eebe5-98f9-40f1-b180-50a171b0f721"
     }
   }
 }
